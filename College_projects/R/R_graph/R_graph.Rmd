@@ -1,0 +1,102 @@
+---
+title: 'Homework #3: 538 Assignment'
+Author: Luke Clement,JaJuan Brown, and Steven Hanaway
+output: pdf_document
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+
+### 538
+
+Names: Luke Clement,JaJuan Brown, and Steven Hanaway
+
+For those of you who don't know, [538](https://fivethirtyeight.com/) is a website that focuses on opinion poll analysis, politics, economics, and sports blogging. It was created and is currently run by Nate Silver, who has become famous for his writing and work on the site. He has a famous book called "The Signal and the Noise", among other works. 
+
+### `fivethirtyeight` package
+
+A nice feature of many articles articles on the site is that the data they use is freely available for people to use and reproduce their analysis. Some professors and students at Smith College have compiled this data into an R package called `fivethirtyeight`. Even nicer, they link to the article page as well!
+
+
+### The Assignment
+
+For this assignment, you are going to work in groups of two or three to recreate a production-level plot an article of your choice!
+
+
+* Assignment Structure:
+    - Choose one or two other classmates to work with
+    - Browse the offerings from the `fivethirtyeight` package. You can run `data(package = "fivethirtyeight")` to get all of the datasets.
+    - Choose an article that has a reasonable plot that seems possible to replicate (or at least get close!)
+    - Contact me as a team and let me know which data you plan to use. I will vet if it's at the appropriate level (too easy or two hard).
+    - Make the plot and comment on how you plot is similar / how it is different.
+    - Due Date: March 18th, 2022
+    
+* Grading:
+    - A: Almost complete recreation of the plot! Only very minor differences
+    - B: Missing some of the finer details but has a strong resemblance to the original plot
+    - C: Recreates the main substance of the plot but is missing all finer details
+    - D and below: Fails to recreate any plot 
+    
+    
+    
+## Code
+
+```{r lib, message=FALSE}
+#install.packages("fivethirtyeight")
+#install.packages("plotly")
+library("tidyverse")
+library("fivethirtyeight")
+library("plotly")
+# data(package = "fivethirtyeight")
+
+# https://projects.fivethirtyeight.com/trump-approval-ratings/ (Graph we were trying to imitate)
+```
+
+
+```{r}
+# code goes here!
+table <- trump_approval_poll
+table <- table %>% select(-pollster,-grade,-grade,-sample_size,-population,-weight,-(multiversions:timestamp)) %>%
+          mutate(end_date = as.Date(end_date)) %>%
+          mutate(approve = approve/100) %>%
+          mutate(disapprove = disapprove/100)
+          
+
+table2 <- trump_approval_trend
+table2 <- table2 %>%
+          select(-timestamp) %>%
+          filter(subgroup == "All polls") %>%
+          mutate(modeldate = as.Date(modeldate)) %>%
+          mutate(approve_estimate = approve_estimate/100) %>%
+          mutate(disapprove_estimate = disapprove_estimate/100) %>%
+          mutate(approve_high = approve_high/100) %>%
+          mutate(disapprove_high = disapprove_high/100) %>%
+          mutate(approve_low = approve_low/100) %>%
+          mutate(disapprove_low = disapprove_low/100)
+
+p <- ggplot(data = table2,aes(x = modeldate, 
+            text = NULL)) + 
+  geom_ribbon(data=table2, aes(x= modeldate, ymin = disapprove_low, ymax = disapprove_high, alpha = 0.2), fill = '#facfac') +
+  geom_ribbon(data=table2, aes(x= modeldate, ymin = approve_low, ymax = approve_high, alpha = 0.2), fill = '#aee0bb') +
+  geom_point(data = table, aes(x = end_date, y = disapprove), color = '#ffcda2') + 
+  geom_point(data = table, aes(x = end_date, y = approve), color =  '#aee0bb') +
+  geom_point(data = table2, aes(y = disapprove_estimate, text = paste(round(disapprove_estimate*100,1),"% Disapproval")), color = '#ffcda2') + 
+  geom_point(data = table2, aes(y = approve_estimate, text = paste(round(approve_estimate*100,1),"% Approval")), color =  '#aee0bb') +
+  geom_line(data = table2,aes(x = modeldate,y = approve_estimate), color ='#019f2a') +
+  geom_line(data = table2,aes(x = modeldate,y = disapprove_estimate), color = '#ff7400') +
+  geom_hline(yintercept = .50, alpha = 0.6) +
+  scale_y_continuous(NULL,label = scales::percent,breaks = c(.20,.30,.40,.50,.60,.70,.80), limits = c(.20,.80)) +
+  theme(title=element_blank())
+
+ggplotly(p, tooltip = "text") %>%
+         layout(hovermode="x")
+```
+
+__Comment:__ So our graph is not a perfect match but it's definitely got all the core features. The graphs are similar in that they share the data points, the approval and disapproval average lines, the confidence interval of the approval and disapproval rates, the middle 50% line, and the same X and Y axes, and most importantly the slider. It was very difficult to implement the slider and we almost did not but we got a close enough approximation. This graph was actually extremely hard to implement and so we hope that it counts for something. The colors should also be virtually identical. We checked the hexadecimal values for them but changed some of them a little because they did not look as good in r.
+
+There graphs are different in that the one on the website has data points all the way to 2021, but the data set we were given only went to 2018 for some reason. We figured that was okay. So our graph more or less represents the period from Jan 2017 to Aug 2018 from the website graph. The X and Y axes are not identical to the one on the website. Our X axis is strictly numbers while the website uses the names of months. Our Y axis has "%" for all the breaks while the website has it for only "80%." The last difference is the slider. Both have the approval and disapproval rating, but ours does not have the line nor the day listed with it. The colors also blend together while our graph does not blend colors when they overlap. 
+
+Also no official title was used for the website graph nor labels for the x and y axes. So to reiterate the graph shows the approval and disapproval rating for Trump. The X axis are dates of polls and the Y axis is the approval/disapproval percentage rating. Also, The graph looks more accurate when in a larger window.

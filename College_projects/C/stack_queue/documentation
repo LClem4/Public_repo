@@ -1,0 +1,252 @@
+Project: Stack & Queue ADTs Juggler
+Program: Documentation
+Course: CSC111
+Professor: Dr. Lee
+Author: Luke Clement
+Created: April 24th, 2022
+Updated: April 26th, 2022
+ 
+
+DOCUMENTATION
+
+Description of the Program:
+	
+	This program is a stack-queue juggler. It first reads in a file with a set of "add" and "delete" commands. These commands are put into a buffer which is then read. 
+
+	When the "add" command is read:
+	1. The number provided after "add" is pushed into inStack and enqueued into inQueue. 
+
+	When The "delete" command is read: 
+	1. The front number in inQueue is dequeued and that number is pushed into outStack. 
+	2. inStack is popped and the number is enqueued into outQueue. 
+
+	outStack and outQueue are then both printed out. The sqjuggler algorithm was tested and analysized to see if it followed the precedure to produce the correct 
+	output. Based on experiments and the algorithmic analysis, the code was successfully run and the sqjuggler gave the intended output for each test input 
+	given. This means both the code and algorithm work as intended. 
+
+Algorithm
+
+		1. if(file cannot be opened or does not have two arguments)
+		   {
+			1.1 Prints error
+			1.2 Terminate program
+		   }
+
+		2. While(There are commands in text file)
+		   {
+			2.1 if(command == add)
+			{
+				2.1.1 number after add is pushed into inStack
+				2.1.2 number after add is enqueued into inQueue
+			}
+			2.2 if(command == delete)
+			{
+				2.2.1 if(There is a value in inStack and inQueue)
+				{
+					2.2.1.1 number in inQueue is dequeued
+					2.2.1.2 number in inStack is popped
+					2.2.1.3 The number dequeued from inQueue is pushed into outstack
+					2.2.1.4 The number popped from inStack is enqueued into outQueue
+					
+				}
+				2.2.2 else
+				{
+					 2.2.2.1 Prints error 
+					 2.2.2.2 Terminate program
+				}
+			}
+		}
+
+		3. for(every item in outStack)
+			3.1 print(pop outStack)
+		4. for(every item in outQueue)
+			4.1 print(dequeue inQueue)				
+	
+		End of Program
+
+
+Algorithm Analysis
+
+	input: ./sqjuggler test1.dat
+
+		1 : file cannot be opened or does not have two arguments == FALSE, program continues
+
+		2 : commands in text file == TRUE
+		2.1 : command == add
+		2.1.1 : 3 is popped into inStack
+		2.1.2 : 3 is enqueued into inQueue
+		2.2 command != delete, program continues
+		
+		2 : commands in text file == TRUE
+		2.1 : command == add
+		2.1.1 : 2 is popped into inStack
+		2.1.2 : 2 is enqueued into inQueue
+		2.2 command != delete, program continues
+
+		2: commands in test file == TRUE
+		2.1 command != add, program continues
+		2.2 command == delete
+		2.2.1 There is a value in inStack and inQueue == TRUE
+		2.2.1.1 3 in inQueue is dequeued 
+		2.2.1.2 2 in inStack is popped
+		2.2.1.3 The 3 is pushed into outStack
+		2.2.1.4 The 2 is enqueued into outQueue
+
+		2: commands in test file == TRUE
+		2.1 command != add, program continues
+		2.2 command == delete
+		2.2.1 There is a value in inStack and inQueue == TRUE
+		2.2.1.1 2 in inQueue is dequeued 
+		2.2.1.2 3 in inStack is popped
+		2.2.1.3 The 2 is pushed into outStack
+		2.2.1.4 The 3 is enqueued into outQueue
+
+		2. commands in test file == FALSE
+
+		3. 2 items in outStack
+		3.1 2 is popped from outStack and printed
+		3. 1 item in outStack
+		3.1 3 is popped from outStack and printed
+		3 0 items in outStack, program continues
+
+		4. 2 items in outQueue
+		4.1 2 is dequeued from outQueue and printed
+		4. 1 item in outStack
+		4.1 3 is popped from outStack and printed
+		4 0 items in outStack, program continues
+	
+		End of Program
+
+	input: ./sqjuggler test2.dat
+
+		1 : file cannot be opened or does not have two arguments == FALSE, program continues
+
+		2 : commands in text file == TRUE
+		2.1 : command == add
+		2.1.1 : 3 is popped into inStack
+		2.1.2 : 3 is enqueued into inQueue
+		2.2 command != delete, program continues
+		
+		2: commands in test file == TRUE
+		2.1 command != add, program continues
+		2.2 command == delete
+		2.2.1 There is a value in inStack and inQueue == TRUE
+		2.2.1.1 3 in inQueue is dequeued 
+		2.2.1.2 3 in inStack is popped
+		2.2.1.3 The 3 is pushed into outStack
+		2.2.1.4 The 3 is enqueued into outQueue
+		
+		2: commands in test file == TRUE
+		2.1 command != add, program continues
+		2.2 command == delete
+		2.2.1 There is a value in inStack and inQueue == FALSE
+		2.2.2 Else
+		2.2.2.1 Prints error
+		2.2.2.2 terminates program
+
+	input ./sqjuggler
+
+		1 : file cannot be opened or does not have two arguments == TRUE
+		1.1 : Prints Error
+		1.2 : Program terminates
+		
+		
+Numerical Experiments
+
+	1. ./sqjuggler test.dat 
+
+	output: outStack: 11 0 7 10 5 2 3
+		outQueue: 2 5 7 0 11 10 3
+
+
+	2. ./sqjuggler test1.dat
+
+
+	output: outStack: 2 3
+		outQueue: 2 3
+
+	
+	3. ./sqjuggler test2.dat
+
+
+	output: "Error in pop, stack is empty"
+
+
+	4. ./sqjuggler
+
+	output: "Program Needs two arguments"
+
+
+	5. ./sqjuggler abc
+
+	output: "abc can't be opened"
+
+
+	6. ./sqjuggler test3.dat
+
+	output: outStack: 3 2 1
+		outQueue: 1 2 3
+	
+
+	7. ./sqjuggler test4.dat
+
+	output: outStack:
+		outQueue:
+
+
+	8. ./sqjuggler test5.dat
+
+		
+	output: outStack: 
+		outQueue:
+
+
+	9. ./sqjuggler test6.dat
+	
+
+	output: outStack: 2 1
+		outQueue: 2 1
+
+	
+	10. ./sqjuggler test7.dat
+
+
+	output: outStack: 1
+		outQueue: 2
+
+
+Numerical Analysis
+
+	Experiment 1 runs with the textfile and therefore the juggler program can take input from the textfile and run it like normal. 
+			This produces the correct output based on the algorithm and experiment.
+	Experiment 2 runs and produces the correct output based on the algorithm and experiment.
+	Experiment 3 runs with data, there is one additional delete and therefore the program exits early with an error. This produces the correct output
+			 based on the algorithm and experiment.
+	Experiment 4 runs without any input data and therefore immediately exits and prints an error because 2 arguements are needed. 
+			This produces the correct output based on the algorithm and experiment.. 
+	Experiment 5 runs with a pointer to a NULL textfile and immediately exits and prints an error. 
+			This produces the correct output based on the algorithm and experiment.
+	Experiment 6 runs and produces the correct output based on the algorithm and experiment.
+	Experiment 7 runs with no data in the textfile and therefore prints out an empty stack and queue. This produces the correct output 
+			based on the algorithm and experiment.
+	Experiment 8 runs with data, but the data does not match the add or delete commands, so the therefore prints an empty stack and queue.
+			 This produces the correct output based on the algorithm and experiment.
+	Experiment 9 runs with data. Add and delete commands are run, while del and ad are ignored. This produces the correct output based 
+			 on the algorithm and experiment.	
+	Experiment 10 runs with data. There is one fewer deletes than needed so not all numbers in inStack and inQueue make it into outQueue and outStack.
+			This produces the correct output based on the algorithm and experiment.
+
+	Based on the numerical ananlysis, the juggler program code and algorithm is working as intended.
+
+
+Conclusion
+
+	This program successfully built a stack-queue juggler. Input is put into inStack and inQueue. Numbers from inStack and inQueue are
+	then put into outQueue and outStack. inStack was put in inQueue, while inQueue was put in outStack. An Algorithm was created
+	using "add" and "delete" instructions to perform this task. The Algorithm was analysized and was found to produce the intended output.
+	Code was developed using the Algorithm. The experimental results and analysis show that the code works as intended. Each experiment 
+	produced the correct output using the code and logic based algorithm. Therefore, the stack-queue juggler program works correctly and as intended.
+
+References
+
+[1] K. N. King, C Programming: A Modern Approach, W. W. Norton & Company, Inc, 2008

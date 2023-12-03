@@ -1,0 +1,10 @@
+# Project Information 
+    Author: Luke Clement
+    Last update: 11/30/23
+
+# Description
+    This program creates a playable chess board. It is unfinished as edge case rules have not been implemented such as En passant, promotion,
+    checkmate, check, and castling through check. There are still bugs, so run with caution.
+
+# Run
+    Example: python3 chess.py
