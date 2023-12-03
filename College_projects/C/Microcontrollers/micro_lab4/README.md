@@ -4,7 +4,7 @@
 
 # Description
     The purpose of this programming project was to help us better understand how to use all digits on the 7-segment display
-    on the BasysMX3 microcontroller. The attached code is for questions 1-5 of 'Lab Assignment 4.pdf'. The swithes
+    on the BasysMX3 microcontroller. The attached code is for questions 1-5 of 'Lab Assignment 4.pdf'. The switches
     are used to run the code associated with each question.
 
 # compile and run

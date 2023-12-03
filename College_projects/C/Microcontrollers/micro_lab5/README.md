@@ -4,7 +4,7 @@
 
 # Description
     The purpose of this programming project was to help us better understand how to use the RGB display
-    on the BasysMX3 microcontroller. The attached code is for part 2 of 'Lab Assignment 5.pdf'. The swithes
+    on the BasysMX3 microcontroller. The attached code is for part 2 of 'Lab Assignment 5.pdf'. The switches
     are used to run the code associated with each question.
 
 # compile and run
