@@ -380,7 +380,7 @@ int main(int argc, char *argv[]){
         }
         fprintf(fp,"\n");
         
-        for(int i = 0; i < 39; i+=2){
+        for(int i = 0; i < 9; i+=2){
             char *file1 = getFile(i);
             char *file2 = getFile(i+1);
             int *A = create_matrix(size);

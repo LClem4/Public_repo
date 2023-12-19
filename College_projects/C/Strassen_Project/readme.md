@@ -48,7 +48,7 @@
   20 matrix pairs. './strassen' runs all 20 pairs.
 
 # How to Run normally
-  1. ./strassen         // (Probably Don't use this) Runs at n = 10, It takes in 20 Pairs of matrices and outputs the time of bruteforce, strassen, and strassen + bruteforce and outputs a csv file
+  1. ./strassen         // (Probably Don't use this) Runs at n = 10, It takes in 5 Pairs of matrices and outputs the time of bruteforce, strassen, and strassen + bruteforce and a csv file
   2. ./strassen a       // (Use this) Example: ./strassen 9 multiplies a single matrix pair at n = 9. Prints the time of bruteforce, strassen, and strassen + bruteforce
   3. ./strassen a b     // (or this) Does the same thing as #2 except that the second argument changes the cutoff size. 2 <= b <= n. Example: ./strassen 9 5
   4. ./strassen a b -p  // (or this) Does the same thing as #3 except that the third argument is a print flag. if -p is in the third argument then the end result matrices will be printed.
